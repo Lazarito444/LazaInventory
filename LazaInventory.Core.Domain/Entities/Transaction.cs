@@ -8,4 +8,6 @@ public class Transaction : AppEntity
     public int ItemId { get; set; }
     public int Quantity { get; set; }
     public TransactionType TransactionType { get; set; }
+    
+    public Item Item { get; set; }
 }
