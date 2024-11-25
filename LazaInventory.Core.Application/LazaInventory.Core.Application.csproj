@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\LazaInventory.Core.Domain\LazaInventory.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

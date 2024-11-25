@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\LazaInventory.Core.Application\LazaInventory.Core.Application.csproj" />
       <ProjectReference Include="..\LazaInventory.Infrastructure.Persistence\LazaInventory.Infrastructure.Persistence.csproj" />
     </ItemGroup>
 
