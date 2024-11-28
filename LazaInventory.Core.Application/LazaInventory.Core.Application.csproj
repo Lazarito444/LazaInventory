@@ -10,4 +10,9 @@
       <ProjectReference Include="..\LazaInventory.Core.Domain\LazaInventory.Core.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    </ItemGroup>
+
 </Project>
