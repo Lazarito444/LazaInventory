@@ -14,5 +14,6 @@ public static class ServiceRegistration
 
         // REGISTER SERVICES CLASSES
         services.AddTransient<ICategoryService, CategoryService>();
+        services.AddTransient<IItemService, ItemService>();
     }
 }
