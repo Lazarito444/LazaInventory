@@ -1,5 +1,3 @@
-using System.Net;
-using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Repositories;
 using LazaInventory.Core.Domain.Common;
 using LazaInventory.Infrastructure.Persistence.Contexts;
@@ -23,16 +21,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         return entity;
     }
 
-    public async Task UpdateAsync(int id, TEntity entity)
+    public void Update(TEntity entityWithOldValues, TEntity entityWithNewValues)
     {
-        TEntity? entityToUpdate = await _dbContext.Set<TEntity>().FindAsync(id);
-
-        // if (entityToUpdate == null)
-        // {
-        //     throw new ApiException(HttpStatusCode.NotFound,
-        //         $"Didn't find any instance of entity {typeof(TEntity)} with id {id}");
-        // }
-        _dbContext.Set<TEntity>().Entry(entityToUpdate!).CurrentValues.SetValues(entity);
+        _dbContext.Set<TEntity>().Entry(entityWithOldValues).CurrentValues.SetValues(entityWithNewValues);
     }
 
     public async Task DeleteAsync(TEntity entity)

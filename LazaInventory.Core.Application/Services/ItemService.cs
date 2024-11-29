@@ -1,9 +1,10 @@
+using System.Net;
 using AutoMapper;
 using LazaInventory.Core.Application.Dtos.Item;
+using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Repositories;
 using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Core.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 
 namespace LazaInventory.Core.Application.Services;
 
@@ -39,9 +40,19 @@ public class ItemService : IItemService
 
     public async Task UpdateAsync(int id, SaveItemDto saveItemDto, string imagePath)
     {
-        Item item = _mapper.Map<Item>(saveItemDto);
-        item.ImageUrl = imagePath;
-        await _itemRepository.UpdateAsync(id, item);
+        Item itemWithNewValues = _mapper.Map<Item>(saveItemDto);
+        itemWithNewValues.ImageUrl = imagePath;
+        itemWithNewValues.Id = id;
+
+        Item? itemWithOldValues = await _itemRepository.GetAsync(id);
+
+        if (itemWithOldValues == null)
+        {
+                throw new ApiException(HttpStatusCode.NotFound,
+                    $"Didn't find any instance of entity {typeof(Item)} with ID '{id}'");
+        }
+        
+        _itemRepository.Update(itemWithOldValues, itemWithNewValues);
     }
 
     public async Task DeleteAsync(int id)

@@ -19,13 +19,18 @@ public class GlobalExceptionMiddleware
         {
             await _next(context);
         }
+        catch (ApiException ex)
+        {
+            await HandleApiExceptionAsync(context, ex);
+
+        }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, ex);
+            await HandleGeneralExceptionAsync(context, ex);
         }
     }
 
-    private Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private Task HandleGeneralExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
@@ -34,15 +39,23 @@ public class GlobalExceptionMiddleware
         {
             ExceptionType = HttpStatusCode.InternalServerError.ToString(),
             ExceptionMessage = "Something went wrong..."
+        };  
+        
+        string response = JsonSerializer.Serialize(errorDetails);
+        return context.Response.WriteAsync(response);
+    }
+
+    private Task HandleApiExceptionAsync(HttpContext context, ApiException exception)
+    {
+        context.Response.ContentType = "application/json";
+        HttpStatusCode statusCode = exception.StatusCode;
+        
+        ErrorDetails errorDetails = new ErrorDetails
+        {
+            ExceptionType = statusCode.ToString(),
+            ExceptionMessage = exception.ExceptionMessage
         };
         
-        if (exception is ApiException apiException)
-        {
-            statusCode = apiException.StatusCode;
-            errorDetails.ExceptionType = statusCode.ToString();
-            errorDetails.ExceptionMessage = apiException.ExceptionMessage;
-        }
-
         context.Response.StatusCode = (int) statusCode;
         string response = JsonSerializer.Serialize(errorDetails);
         return context.Response.WriteAsync(response);
