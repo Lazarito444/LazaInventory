@@ -1,4 +1,5 @@
 using LazaInventory.Infrastructure.Persistence;
+using LazaInventory.Presentation.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseGlobalExceptionMiddleware();
 app.UseHttpsRedirection();
 
 app.Run();

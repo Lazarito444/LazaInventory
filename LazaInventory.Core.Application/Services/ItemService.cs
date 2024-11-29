@@ -53,4 +53,10 @@ public class ItemService : IItemService
             await _itemRepository.DeleteAsync(item);
         }
     }
+
+    public async Task<List<Item>> GetLowStockItems()
+    {
+        List<Item> lowStockItems = await _itemRepository.GetLowStockItems();
+        return lowStockItems;
+    }
 }
