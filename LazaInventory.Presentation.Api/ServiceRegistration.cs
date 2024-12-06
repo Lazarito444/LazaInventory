@@ -1,4 +1,6 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace LazaInventory.Presentation.Api;
 
@@ -8,7 +10,24 @@ public static class ServiceRegistration
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo 
+            {
+                Version = "v1",
+                Title = "LazaInventory API",
+                Description = "This API provide a way to create transactions, items and categories, you can also read, update and delete items and categories.",
+                Contact = new OpenApiContact
+                {
+                    Name = "Ariel David Lázaro Pérez (@Lazarito444)",
+                    Email = "ariellazaro444@gmail.com",
+                    Url = new Uri("https://github.com/Lazarito444")
+                }
+            });
+            options.DescribeAllParametersInCamelCase();
+            string xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
         services.AddCors(options =>
         {
             options.AddPolicy("AllowAll", builder =>

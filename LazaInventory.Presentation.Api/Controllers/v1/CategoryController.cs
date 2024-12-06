@@ -31,12 +31,12 @@ public class CategoryController : BaseApiController
         return Ok(categories);
     }
 
-    [HttpGet("{id:int:required}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetCategory(int id)
+    public async Task<IActionResult> GetCategory([FromRoute] int id)
     {
         if (id <= 0)
         {
@@ -82,7 +82,7 @@ public class CategoryController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeleteCategory(int id)
+    public async Task<IActionResult> DeleteCategory([FromRoute] int id)
     {
         if (id <= 0)
         {
