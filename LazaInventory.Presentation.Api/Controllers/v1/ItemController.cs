@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/items")]
+[ApiVersion("1.0")]
 public class ItemController : BaseApiController
 {
     private readonly IItemService _itemService;
@@ -77,7 +78,7 @@ public class ItemController : BaseApiController
             TransactionType = TransactionType.In
         });
         
-        return CreatedAtAction(nameof(GetItem), new { Id = newItem.Id }, newItem);
+        return CreatedAtAction(nameof(GetItem), new { newItem.Id }, newItem);
     }
 
     [HttpDelete("{id:int:required}")]

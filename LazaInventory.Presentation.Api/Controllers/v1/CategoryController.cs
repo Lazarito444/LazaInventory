@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/categories")]
+[ApiVersion("1.0")]
 public class CategoryController : BaseApiController
 {
     private readonly ICategoryService _categoryService;

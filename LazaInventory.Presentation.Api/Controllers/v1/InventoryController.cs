@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/inventory")]
+[ApiVersion("1.0")]
 public class InventoryController : BaseApiController
 {
     private readonly ITransactionService _transactionService;
