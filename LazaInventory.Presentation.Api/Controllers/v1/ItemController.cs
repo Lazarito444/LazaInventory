@@ -71,6 +71,44 @@ public class ItemController : BaseApiController
         return CreatedAtAction(nameof(GetItem), new { Id = newItem.Id }, newItem);
     }
 
+    [HttpDelete("{id:int:required}")]
+    public async Task<IActionResult> DeleteItem([FromRoute] int id)
+    {
+        if (id <= 0)
+        {
+            throw new ApiException(HttpStatusCode.BadRequest, "The ID must be a positive integer");
+        }
+
+        await _itemService.DeleteAsync(id);
+        return NoContent();
+    }
+
+    [HttpPut("{id:int:required}")]
+    public async Task<IActionResult> UpdateItem([FromForm] SaveItemDto saveItemDto, [FromRoute] int id)
+    {
+        Item? item = await _itemService.GetAsync(id);
+
+        if (item == null)
+        {
+            throw new ApiException(HttpStatusCode.NotFound, $"There's no item with ID '{id}'");
+        }
+
+        await UpdateImageAsync(saveItemDto.Image, item.ImageUrl);
+        await _itemService.UpdateAsync(id, saveItemDto, item.ImageUrl);
+        
+        return NoContent();
+    }
+
+    [HttpGet("low-stock")]
+    public async Task<IActionResult> GetLowStockItems()
+    {
+        List<Item> lowStockItems = await _itemService.GetLowStockItemsAsync();
+
+        if (lowStockItems.Count == 0) return NoContent();
+
+        return Ok(lowStockItems);
+    }
+    
     private async Task<string> SaveImageAsync(IFormFile image)
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];

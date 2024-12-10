@@ -41,9 +41,8 @@ public class ItemService : IItemService
     public async Task UpdateAsync(int id, SaveItemDto saveItemDto, string imagePath)
     {
         Item itemWithNewValues = _mapper.Map<Item>(saveItemDto);
-        itemWithNewValues.ImageUrl = imagePath;
         itemWithNewValues.Id = id;
-
+        itemWithNewValues.ImageUrl = imagePath;
         Item? itemWithOldValues = await _itemRepository.GetAsync(id);
 
         if (itemWithOldValues == null)
@@ -52,7 +51,7 @@ public class ItemService : IItemService
                     $"Didn't find any instance of entity {typeof(Item)} with ID '{id}'");
         }
         
-        _itemRepository.Update(itemWithOldValues, itemWithNewValues);
+        await _itemRepository.UpdateAsync(itemWithOldValues, itemWithNewValues);
     }
 
     public async Task DeleteAsync(int id)
@@ -65,7 +64,7 @@ public class ItemService : IItemService
         }
     }
 
-    public async Task<List<Item>> GetLowStockItems()
+    public async Task<List<Item>> GetLowStockItemsAsync()
     {
         List<Item> lowStockItems = await _itemRepository.GetLowStockItems();
         return lowStockItems;

@@ -60,6 +60,6 @@ public class CategoryService : ICategoryService
                 $"Didn't find any instance of entity {typeof(Category)} with ID '{id}'");
         }        
         categoryWithNewValues.Id = id;
-        _categoryRepository.Update(categoryWithOldValues, categoryWithNewValues);
+        await _categoryRepository.UpdateAsync(categoryWithOldValues, categoryWithNewValues);
     }
 }

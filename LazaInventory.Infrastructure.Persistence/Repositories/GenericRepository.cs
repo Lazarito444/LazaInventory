@@ -21,9 +21,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         return entity;
     }
 
-    public void Update(TEntity entityWithOldValues, TEntity entityWithNewValues)
+    public async Task UpdateAsync(TEntity entityWithOldValues, TEntity entityWithNewValues)
     {
         _dbContext.Set<TEntity>().Entry(entityWithOldValues).CurrentValues.SetValues(entityWithNewValues);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(TEntity entity)

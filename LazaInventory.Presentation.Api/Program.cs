@@ -11,7 +11,6 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration.GetConnectionString("AppConnection") 
                                      ?? throw new Exception("Connection String was not found"));
 builder.Services.AddPresentationLayer();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

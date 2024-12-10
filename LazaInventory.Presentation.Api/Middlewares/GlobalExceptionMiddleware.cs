@@ -41,6 +41,7 @@ public class GlobalExceptionMiddleware
             ExceptionMessage = "Something went wrong..."
         };  
         
+        context.Response.StatusCode = (int) statusCode;
         string response = JsonSerializer.Serialize(errorDetails);
         return context.Response.WriteAsync(response);
     }

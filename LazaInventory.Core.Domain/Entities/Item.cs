@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using LazaInventory.Core.Domain.Common;
 
 namespace LazaInventory.Core.Domain.Entities;
@@ -11,5 +12,6 @@ public class Item : AppEntity
     public string Name { get; set; }
     public string ImageUrl { get; set; }
     
+    [JsonIgnore]
     public Category Category { get; set; }
 }

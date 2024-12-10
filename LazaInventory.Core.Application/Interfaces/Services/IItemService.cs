@@ -10,4 +10,6 @@ public interface IItemService
     Task<Item> CreateAsync(SaveItemDto saveItemDto, string imagePath);
     Task UpdateAsync(int id, SaveItemDto saveItemDto, string imagePath);
     Task DeleteAsync(int id);
+
+    Task<List<Item>> GetLowStockItemsAsync();
 }
