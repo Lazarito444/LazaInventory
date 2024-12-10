@@ -1,8 +1,10 @@
 using System.Net;
 using LazaInventory.Core.Application.Dtos.Item;
+using LazaInventory.Core.Application.Dtos.Transaction;
 using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Core.Domain.Entities;
+using LazaInventory.Core.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -12,9 +14,11 @@ namespace LazaInventory.Presentation.Api.Controllers.v1;
 public class ItemController : BaseApiController
 {
     private readonly IItemService _itemService;
-    public ItemController(IItemService itemService)
+    private readonly ITransactionService _transactionService;
+    public ItemController(IItemService itemService, ITransactionService transactionService)
     {
         _itemService = itemService;
+        _transactionService = transactionService;
     }
 
     [HttpGet]
@@ -65,9 +69,14 @@ public class ItemController : BaseApiController
         }
 
         string imagePath = await SaveImageAsync(saveItemDto.Image);
-        
         Item newItem = await _itemService.CreateAsync(saveItemDto, imagePath);
-
+        await _transactionService.RegisterTransactionAsync(new SaveTransactionDto
+        {
+            Quantity = newItem.Stock,
+            ItemId = newItem.Id,
+            TransactionType = TransactionType.In
+        });
+        
         return CreatedAtAction(nameof(GetItem), new { Id = newItem.Id }, newItem);
     }
 

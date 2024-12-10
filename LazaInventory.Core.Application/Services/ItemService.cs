@@ -35,6 +35,7 @@ public class ItemService : IItemService
     {
         Item item = _mapper.Map<Item>(saveItemDto);
         item.ImageUrl = imagePath;
+        item.Stock = 0;
         return await _itemRepository.CreateAsync(item);
     }
 

@@ -31,4 +31,18 @@ public class ItemRepository : GenericRepository<Item>, IItemRepository
         List<Item> lowStockItems = await _dbContext.Set<Item>().Where(item => item.Stock <= item.MinimumStock).ToListAsync();
         return lowStockItems;
     }
+
+    public async Task AddStockToItemAsync(int itemId, int quantity)
+    {
+        Item item = (await _dbContext.Set<Item>().FindAsync(itemId))!;
+        item.Stock += quantity;
+        await _dbContext.SaveChangesAsync();
+    }
+    
+    public async Task RemoveStockToItemAsync(int itemId, int quantity)
+    {
+        Item item = (await _dbContext.Set<Item>().FindAsync(itemId))!;
+        item.Stock -= quantity;
+        await _dbContext.SaveChangesAsync();
+    }
 }
