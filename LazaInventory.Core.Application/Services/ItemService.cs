@@ -39,11 +39,10 @@ public class ItemService : IItemService
         return await _itemRepository.CreateAsync(item);
     }
 
-    public async Task UpdateAsync(int id, SaveItemDto saveItemDto, string imagePath)
+    public async Task UpdateAsync(int id, UpdateItemDto updateItemDto, string imagePath)
     {
-        Item itemWithNewValues = _mapper.Map<Item>(saveItemDto);
-        itemWithNewValues.Id = id;
-        itemWithNewValues.ImageUrl = imagePath;
+        Item itemWithNewValues = _mapper.Map<Item>(updateItemDto);
+
         Item? itemWithOldValues = await _itemRepository.GetAsync(id);
 
         if (itemWithOldValues == null)
@@ -51,6 +50,10 @@ public class ItemService : IItemService
                 throw new ApiException(HttpStatusCode.NotFound,
                     $"Didn't find any instance of entity {typeof(Item)} with ID '{id}'");
         }
+        
+        itemWithNewValues.Id = id;
+        itemWithNewValues.ImageUrl = imagePath;
+        itemWithNewValues.Stock = itemWithOldValues.Stock;
         
         await _itemRepository.UpdateAsync(itemWithOldValues, itemWithNewValues);
     }

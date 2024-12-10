@@ -93,7 +93,7 @@ public class ItemController : BaseApiController
     }
 
     [HttpPut("{id:int:required}")]
-    public async Task<IActionResult> UpdateItem([FromForm] SaveItemDto saveItemDto, [FromRoute] int id)
+    public async Task<IActionResult> UpdateItem([FromForm] UpdateItemDto updateItemDto, [FromRoute] int id)
     {
         Item? item = await _itemService.GetAsync(id);
 
@@ -102,8 +102,8 @@ public class ItemController : BaseApiController
             throw new ApiException(HttpStatusCode.NotFound, $"There's no item with ID '{id}'");
         }
 
-        await UpdateImageAsync(saveItemDto.Image, item.ImageUrl);
-        await _itemService.UpdateAsync(id, saveItemDto, item.ImageUrl);
+        await UpdateImageAsync(updateItemDto.Image, item.ImageUrl);
+        await _itemService.UpdateAsync(id, updateItemDto, item.ImageUrl);
         
         return NoContent();
     }
