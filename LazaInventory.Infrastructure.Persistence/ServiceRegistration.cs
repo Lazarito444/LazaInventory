@@ -1,6 +1,10 @@
 using LazaInventory.Core.Application.Interfaces.Repositories;
+using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Infrastructure.Persistence.Contexts;
+using LazaInventory.Infrastructure.Persistence.Entities;
 using LazaInventory.Infrastructure.Persistence.Repositories;
+using LazaInventory.Infrastructure.Persistence.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,5 +29,16 @@ public static class ServiceRegistration
         services.AddTransient<ICategoryRepository, CategoryRepository>();
         services.AddTransient<IItemRepository, ItemRepository>();
         services.AddTransient<ITransactionRepository, TransactionRepository>();
+        
+        // IDENTITY
+        services.AddIdentity<AppUser, IdentityRole<int>>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+        
+        // REGISTER AUTH SERVICE
+        services.AddTransient<IAuthService, AuthService>();
     }
 }

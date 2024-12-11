@@ -1,9 +1,12 @@
 using LazaInventory.Infrastructure.Persistence.Configurations;
+using LazaInventory.Infrastructure.Persistence.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LazaInventory.Infrastructure.Persistence.Contexts;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<int>, int>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
