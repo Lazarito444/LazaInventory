@@ -3,6 +3,7 @@ using LazaInventory.Core.Application.Dtos.Category;
 using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Core.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -10,6 +11,7 @@ namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/categories")]
 [ApiVersion("1.0")]
+[Authorize]
 public class CategoryController : BaseApiController
 {
     private readonly ICategoryService _categoryService;

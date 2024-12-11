@@ -5,6 +5,7 @@ using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Core.Domain.Entities;
 using LazaInventory.Core.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -12,6 +13,7 @@ namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/items")]
 [ApiVersion("1.0")]
+[Authorize]
 public class ItemController : BaseApiController
 {
     private readonly IItemService _itemService;

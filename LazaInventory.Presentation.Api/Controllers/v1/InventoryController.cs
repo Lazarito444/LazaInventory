@@ -4,12 +4,14 @@ using LazaInventory.Core.Application.Exceptions;
 using LazaInventory.Core.Application.Interfaces.Services;
 using LazaInventory.Core.Domain.Entities;
 using LazaInventory.Core.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LazaInventory.Presentation.Api.Controllers.v1;
 
 [Route("api/inventory")]
 [ApiVersion("1.0")]
+[Authorize]
 public class InventoryController : BaseApiController
 {
     private readonly ITransactionService _transactionService;

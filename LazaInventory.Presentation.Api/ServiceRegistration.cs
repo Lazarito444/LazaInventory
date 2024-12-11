@@ -1,5 +1,8 @@
+using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using LazaInventory.Core.Application.Dtos.Auth;
 using LazaInventory.Core.Domain.Options;
 using LazaInventory.Presentation.Api.Converters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -107,6 +110,39 @@ public static class ServiceRegistration
                 ValidIssuer = jwtOptions.Issuer,
                 ValidAudience = jwtOptions.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key))
+            };
+            options.Events = new JwtBearerEvents()
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    context.NoResult();
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "text/plain";
+                    return context.Response.WriteAsync(context.Exception.ToString());
+                },
+                OnChallenge = context =>
+                {
+                    context.HandleResponse();
+                    context.Response.StatusCode = 401;
+                    context.Response.ContentType = "application/json";
+                    string result = JsonSerializer.Serialize(new RegisterResponse
+                    {
+                        Error = "You are not authenticated, please authenticate",
+                        HasError = true
+                    });
+                    return context.Response.WriteAsync(result);
+                },
+                OnForbidden = context =>
+                {
+                    context.Response.StatusCode = 403;
+                    context.Response.ContentType = "application/json";
+                    string result = JsonSerializer.Serialize(new RegisterResponse
+                    {
+                        HasError = true,
+                        Error = "You are not authorized to do this action"
+                    });
+                    return context.Response.WriteAsync(result);
+                }
             };
         });
     }
