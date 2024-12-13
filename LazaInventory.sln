@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazaInventory.Core.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazaInventory.Infrastructure.Persistence", "LazaInventory.Infrastructure.Persistence\LazaInventory.Infrastructure.Persistence.csproj", "{6170DCE8-1E61-4C50-ADA7-5D5F235AA60E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazaInventory.Presentation.GraphQL", "LazaInventory.Presentation.GraphQL\LazaInventory.Presentation.GraphQL.csproj", "{0BB107D1-E690-4960-8A08-A3403D3A351E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B62AAC4D-FBE1-4404-9AB7-B2FE0EF9E379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazaInventory.Tests.UnitTest", "LazaInventory.Tests.UnitTest\LazaInventory.Tests.UnitTest.csproj", "{ADF04CB6-DE7F-46B5-A814-E250DB6852DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,11 +42,21 @@ Global
 		{6170DCE8-1E61-4C50-ADA7-5D5F235AA60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6170DCE8-1E61-4C50-ADA7-5D5F235AA60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6170DCE8-1E61-4C50-ADA7-5D5F235AA60E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB107D1-E690-4960-8A08-A3403D3A351E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB107D1-E690-4960-8A08-A3403D3A351E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB107D1-E690-4960-8A08-A3403D3A351E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB107D1-E690-4960-8A08-A3403D3A351E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF04CB6-DE7F-46B5-A814-E250DB6852DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF04CB6-DE7F-46B5-A814-E250DB6852DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF04CB6-DE7F-46B5-A814-E250DB6852DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF04CB6-DE7F-46B5-A814-E250DB6852DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DB01E948-DA27-4F58-B036-4526F77D0CD8} = {F23E48E4-C60F-4B88-9E2F-7B8B77D4EEE7}
 		{1CA9F3B0-6B50-4C0C-9F98-8ED60D43AC6E} = {206C9DF9-D889-4752-8A87-EE870829826D}
 		{E1136B42-DAA3-4AD3-8110-F3C072B27D11} = {206C9DF9-D889-4752-8A87-EE870829826D}
 		{6170DCE8-1E61-4C50-ADA7-5D5F235AA60E} = {E9345B16-FB82-4752-8819-FB3EC51F96C6}
+		{0BB107D1-E690-4960-8A08-A3403D3A351E} = {F23E48E4-C60F-4B88-9E2F-7B8B77D4EEE7}
+		{ADF04CB6-DE7F-46B5-A814-E250DB6852DA} = {B62AAC4D-FBE1-4404-9AB7-B2FE0EF9E379}
 	EndGlobalSection
 EndGlobal
